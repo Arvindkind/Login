@@ -1,0 +1,50 @@
+/* App container for centering content */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+}
+
+/* Card style for main content */
+.app-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60, 60, 60, 0.15);
+  padding: 2.5rem 2rem;
+  max-width: 400px;
+  width: 100%;
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .app-card {
+    padding: 1.2rem 0.5rem;
+    max-width: 95vw;
+  }
+}
+
+/* Headings */
+.app-card h1,
+.app-card h2 {
+  text-align: center;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Links */
+a {
+  color: #fda085;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #f6d365;
+  text-decoration: underline;
+}
