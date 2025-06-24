@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,} from "react";
 import "./Login.css";
 import { validateLogin } from "./validation";
 import GoogleAuthButton from "./auth/GoogleAuthButton";
@@ -13,28 +13,57 @@ const Login = () => {
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const validationErrors = validateLogin(form);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const validationErrors = validateLogin(form);
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     return;
+  //   }
 
-    // ...existing code...
-    setTimeout(() => {
-      setLoading(false);
+  //   // ...existing code...
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //     alert("Logged in successfully!");
+  //     setForm({ email: "", password: "" }); // <-- Add this line
+  //   }, 1200);
+  //   // ...existing code...
+  //   setLoading(true);
+  //   // Simulate API call
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //     alert("Logged in successfully!");
+  //   }, 1200);
+  // };
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  const validationErrors = validateLogin(form);
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
+  setLoading(true);
+  try {
+    const res = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+    const data = await res.json();
+    setLoading(false);
+    if (res.ok) {
+      localStorage.setItem("jwt", data.token);
       alert("Logged in successfully!");
-      setForm({ email: "", password: "" }); // <-- Add this line
-    }, 1200);
-    // ...existing code...
-    setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      alert("Logged in successfully!");
-    }, 1200);
-  };
+      setForm({ email: "", password: "" });
+    } else {
+      setErrors({ general: data.error });
+    }
+  } catch {
+    setLoading(false);
+    setErrors({ general: "Server error" });
+  }
+};
 
   return (
     <div className="login-container">
