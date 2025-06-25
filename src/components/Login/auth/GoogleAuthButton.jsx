@@ -1,16 +1,25 @@
-import React from "react";
 import { signInWithGoogle } from "./googleAuthService";
 import "./GoogleAuthButton.css";
-import viteLogo from "/vite.svg"; // Adjust path as necessary
+
+const GOOGLE_ICON =
+  "https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg";
 
 const GoogleAuthButton = () => (
-  <button className="google-btn" onClick={signInWithGoogle} type="button">
+  <button
+    className="google-btn"
+    onClick={signInWithGoogle}
+    type="button"
+    aria-label="Sign in with Google"
+  >
     <img
-      src={viteLogo}
-      alt="Google"
+      src={GOOGLE_ICON}
+      alt="Google logo"
       className="google-icon"
+      width={22}
+      height={22}
+      style={{ marginRight: 8 }}
     />
-    Sign in with Google
+    <span>Sign in with Google</span>
   </button>
 );
 
